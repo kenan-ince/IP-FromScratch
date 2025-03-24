@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="jakarta.faces.html"
+				xmlns:ui="jakarta.faces.facelets"
+				template="/back/admin-template.xhtml"
+				xmlns:f="jakarta.faces.core">
+
+	<ui:define name="entity-table">
+		<h:form>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Parent Category</th>
+						<th>Title</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<ui:repeat value="#{cb.list}" var="e">
+						<tr>
+							<td>#{e.id}</td>
+							<td>#{e.parent.title}</td>
+							<td>
+								<h:commandLink action="#{cb.setEntity(e)}" value="#{e.title}" />
+							</td>
+							<td>
+								<h:commandLink styleClass="btn btn-danger btn-sm" action="#{cb.delete(e)}" value="Delete" />
+							</td>
+						</tr>
+					</ui:repeat>
+				</tbody>
+			</table>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="entity-form">
+		<h:form>
+			<div class="mb-3">
+				<label>Parent Category</label>
+				<h:selectOneMenu styleClass="form-select" value="#{cb.entity.parent}">
+					<f:selectItem itemValue="#{null}" itemLabel="Select a parent category" />
+					<f:selectItems value="#{cb.list}" var="e" itemValue="#{e}" itemLabel="#{e.title}" />
+				</h:selectOneMenu>
+			</div>
+			<div class="mb-3">
+				<label for="exampleFormControlInput1" class="form-label">Category Title</label>
+				<h:inputText value="#{cb.entity.title}" styleClass="form-control" />
+			</div>
+			<div class="mb-3">
+				<div class="btn-group" role="group" aria-label="Basic example">
+					<h:commandButton styleClass="btn btn-primary" rendered="#{cb.entity.id == null}" action="#{cb.create()}" value="Create" />
+					<h:commandButton styleClass="btn btn-success" rendered="#{cb.entity.id != null}"  action="#{cb.update()}" value="Update" />
+					<h:commandButton styleClass="btn btn-secondary" rendered="#{cb.entity.id != null}"  action="#{cb.clearForm()}" value="Clear Form" />
+				</div>
+			</div>
+		</h:form>
+		<h:messages />
+	</ui:define>
+
+</ui:composition>

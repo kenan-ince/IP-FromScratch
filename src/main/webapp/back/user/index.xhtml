@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="jakarta.faces.html"
+				xmlns:ui="jakarta.faces.facelets"
+				template="/back/admin-template.xhtml">
+    
+	<ui:define name="entity-table">
+		
+		<h:form>
+			<table  class="table table-hover">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name Surname</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody>
+					<ui:repeat value="#{ub.list}" var="e" >
+						<tr>
+							<td>#{e.id}</td>
+							<td>#{e.nameSurname}</td>
+							<td>
+								<h:commandLink action="#{ub.setEntity(e)}" value="#{e.email}" />
+							</td>
+						</tr>
+					</ui:repeat>
+				</tbody>
+			</table>
+		</h:form>
+		
+	</ui:define>
+	
+	<ui:define name="entity-form">
+		<h:form>
+			<div class="mb-3">
+				<label for="exampleFormControlInput1" class="form-label">Name Surname</label>
+				<h:inputText value="#{ub.entity.nameSurname}" styleClass="form-control" />
+			</div>
+			<div class="mb-3">
+				<label for="exampleFormControlInput1" class="form-label">Email</label>
+				<h:inputText value="#{ub.entity.email}" styleClass="form-control" />
+			</div>
+			<div class="mb-3">
+				<label for="exampleFormControlInput1" class="form-label">Password</label>
+				<h:inputText value="#{ub.entity.password}" styleClass="form-control" />
+			</div>
+			<div class="mb-3">
+				<div class="btn-group" role="group" aria-label="Basic example">
+					<h:commandButton styleClass="btn btn-primary" rendered="#{ub.entity.id == null}" action="#{ub.create()}" value="Create" />
+					<h:commandButton styleClass="btn btn-success" rendered="#{ub.entity.id != null}"  action="#{ub.update()}" value="Update" />
+					<h:commandButton styleClass="btn btn-danger" rendered="#{ub.entity.id != null}"  action="#{ub.delete()}" value="Delete" />
+					<h:commandButton styleClass="btn btn-secondary" rendered="#{ub.entity.id != null}"  action="#{ub.clearForm()}" value="Clear Form" />
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>
