@@ -4,9 +4,12 @@
 				xmlns:h="jakarta.faces.html"
 				xmlns:ui="jakarta.faces.facelets"
 				template="/back/admin-template.xhtml"
-				xmlns:f="jakarta.faces.core">
+				xmlns:f="jakarta.faces.core"
+				xmlns:jsf="jakarta.faces.passthrough">
 
 	<ui:define name="entity-table">
+		<h4 class="mt-3 mb-0">Category List</h4>
+		<hr class="mt-0" />
 		<h:form>
 			<table class="table table-hover">
 				<thead>
@@ -31,11 +34,24 @@
 						</tr>
 					</ui:repeat>
 				</tbody>
+
 			</table>
+			<h:panelGroup styleClass="row" layout="block" rendered="#{cb.pageCount>1}">
+				<div class="container">
+					<h:form>
+						<div class="btn-group">
+							<h:commandButton action="#{cb.previous()}" styleClass="btn btn-primary" value="&lsaquo;" />
+							<h:commandButton action="#{cb.next()}" styleClass="btn btn-primary float-end" value="&rsaquo;" />
+						</div>
+					</h:form>
+				</div>
+			</h:panelGroup>
 		</h:form>
 	</ui:define>
 
 	<ui:define name="entity-form">
+		<h4 class="mt-3 mb-0">Category Form</h4>
+		<hr class="mt-0" />
 		<h:form>
 			<div class="mb-3">
 				<label>Parent Category</label>
@@ -52,7 +68,7 @@
 				<div class="btn-group" role="group" aria-label="Basic example">
 					<h:commandButton styleClass="btn btn-primary" rendered="#{cb.entity.id == null}" action="#{cb.create()}" value="Create" />
 					<h:commandButton styleClass="btn btn-success" rendered="#{cb.entity.id != null}"  action="#{cb.update()}" value="Update" />
-					<h:commandButton styleClass="btn btn-secondary" rendered="#{cb.entity.id != null}"  action="#{cb.clearForm()}" value="Clear Form" />
+					<h:commandButton styleClass="btn btn-secondary" rendered="#{cb.entity.id != null}"  action="#{cb.clear()}" value="Clear Form" />
 				</div>
 			</div>
 		</h:form>

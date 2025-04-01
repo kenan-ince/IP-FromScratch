@@ -4,9 +4,10 @@
 				xmlns:h="jakarta.faces.html"
 				xmlns:ui="jakarta.faces.facelets"
 				template="/back/admin-template.xhtml">
-    
+
 	<ui:define name="entity-table">
-		
+		<h4 class="mt-3 mb-0">User List</h4>
+		<hr class="mt-0" />
 		<h:form>
 			<table  class="table table-hover">
 				<thead>
@@ -28,11 +29,23 @@
 					</ui:repeat>
 				</tbody>
 			</table>
+			<h:panelGroup styleClass="row" layout="block" rendered="#{ub.pageCount>1}">
+				<div class="container">
+					<h:form>
+						<div class="btn-group">
+							<h:commandButton action="#{ub.previous()}" styleClass="btn btn-primary" value="&lsaquo;" />
+							<h:commandButton action="#{ub.next()}" styleClass="btn btn-primary float-end" value="&rsaquo;" />
+						</div>
+					</h:form>
+				</div>
+			</h:panelGroup>
 		</h:form>
-		
+
 	</ui:define>
-	
+
 	<ui:define name="entity-form">
+		<h4 class="mt-3 mb-0">User Form</h4>
+		<hr class="mt-0" />
 		<h:form>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">Name Surname</label>
@@ -51,10 +64,10 @@
 					<h:commandButton styleClass="btn btn-primary" rendered="#{ub.entity.id == null}" action="#{ub.create()}" value="Create" />
 					<h:commandButton styleClass="btn btn-success" rendered="#{ub.entity.id != null}"  action="#{ub.update()}" value="Update" />
 					<h:commandButton styleClass="btn btn-danger" rendered="#{ub.entity.id != null}"  action="#{ub.delete()}" value="Delete" />
-					<h:commandButton styleClass="btn btn-secondary" rendered="#{ub.entity.id != null}"  action="#{ub.clearForm()}" value="Clear Form" />
+					<h:commandButton styleClass="btn btn-secondary" rendered="#{ub.entity.id != null}"  action="#{ub.clear()}" value="Clear Form" />
 				</div>
 			</div>
 		</h:form>
 	</ui:define>
-	
+
 </ui:composition>

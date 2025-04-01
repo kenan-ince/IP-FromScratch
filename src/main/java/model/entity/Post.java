@@ -1,32 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import java.io.Serializable;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.util.List;
-import java.util.Objects;
 
 /**
  *
  * @author kenanince
  */
 @Entity
-public class Post implements Serializable {
+public class Post extends BaseEntity {
 
 	private static final long serialVersionUID = -725328770041604008L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
 	@ManyToMany(targetEntity = Category.class)
 	@JoinTable(
@@ -39,22 +28,17 @@ public class Post implements Serializable {
 
 	private String content;
 
+	@OneToMany(targetEntity = Document.class,orphanRemoval = true, mappedBy = "post")
+	private List<Document> docs;
+
 	public Post() {
 	}
 
 	public Post(Long id, List<Category> categories, String title, String content) {
-		this.id = id;
+		super(id);
 		this.categories = categories;
 		this.title = title;
 		this.content = content;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public List<Category> getCategories() {
@@ -81,31 +65,17 @@ public class Post implements Serializable {
 		this.content = content;
 	}
 
+	public List<Document> getDocs() {
+		return docs;
+	}
+
+	public void setDocs(List<Document> docs) {
+		this.docs = docs;
+	}
+
 	@Override
 	public String toString() {
-		return "Post{" + "id=" + id + ", categories=" + categories + ", title=" + title + ", content=" + content + '}';
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = 7;
-		hash = 97 * hash + Objects.hashCode(this.id);
-		return hash;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Post other = (Post) obj;
-		return Objects.equals(this.id, other.id);
+		return "Post{" + "id=" + this.getId() + ", categories=" + categories + ", title=" + title + ", content=" + content + '}';
 	}
 
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package converter;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -28,7 +24,7 @@ public class CategoryConverter implements Converter {
 	public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
 		Long id = Long.valueOf(string);
 		if (id != null) {
-			return repo.findByID(id);
+			return repo.find(id);
 		} else {
 			return null;
 		}

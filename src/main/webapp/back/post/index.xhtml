@@ -3,14 +3,15 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 				xmlns:h="jakarta.faces.html"
 				xmlns:ui="jakarta.faces.facelets"
-				template="/back/admin-template.xhtml">
-    
+				template="/back/admin-template.xhtml"
+				xmlns:f="jakarta.faces.core">
+
 	<ui:define name="entity-table">
-		
+		<ui:include src="/back/post/table.xhtml" />
 	</ui:define>
-	
+
 	<ui:define name="entity-form">
-		
+		<ui:include src="/back/post/#{pb.right}.xhtml" />
 	</ui:define>
-	
+
 </ui:composition>

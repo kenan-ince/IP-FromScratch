@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package filter;
 
 import jakarta.servlet.Filter;
@@ -28,10 +24,15 @@ public class LoginFilter implements Filter {
 		HttpServletRequest q = (HttpServletRequest) req;
 		HttpServletResponse s = (HttpServletResponse) res;
 
+		q.setCharacterEncoding("UTF-8");
+		s.setContentType("text/html; charset=utf-8");
+
 		String url = q.getRequestURI();
 		HttpSession session = q.getSession();
 
 		SystemUser user = null;
+
+//		fc.doFilter(req, res);
 
 		if (session != null) {
 			user = (SystemUser) session.getAttribute("authenticated");
@@ -46,7 +47,6 @@ public class LoginFilter implements Filter {
 		} else {
 			fc.doFilter(req, res);
 		}
-
 	}
 
 }
