@@ -4,3 +4,5 @@ nbproject/
 dist/
 build/
 test/
+nb-configuration.xml
+nbactions.xml
