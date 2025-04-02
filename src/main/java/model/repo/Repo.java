@@ -14,5 +14,6 @@ public interface Repo<T> {
 	public T update(T t);
 	public void delete(T t);
 	public List<T> findByField(String f, Object s);
-	public T findByFields(Map<String, Object> map);
+	public T findByFieldAND(Map<String, Object> map);
+	public T findByFieldOR(Map<String, Object> map);
 }

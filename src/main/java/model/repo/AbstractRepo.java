@@ -70,17 +70,13 @@ public abstract class AbstractRepo<T> implements Repo<T> {
 			q.setParameter("search", search);
 			return q.getResultList();
 		} catch (Exception e) {
-			System.out.println("---------------------------------------------------------------");
-			System.out.println("Field: " + field);
-			System.out.println("Search: " + search);
 			System.out.println(e.getMessage());
-			System.out.println("---------------------------------------------------------------");
 			return null;
 		}
 	}
 
 	@Override
-	public T findByFields(Map<String, Object> searchItems) {
+	public T findByFieldAND(Map<String, Object> searchItems) {
 		String condition = "";
 
 		for (Map.Entry<String, Object> entry : searchItems.entrySet()) {
@@ -88,6 +84,37 @@ public abstract class AbstractRepo<T> implements Repo<T> {
 			Object value = entry.getValue();
 			if (condition.length() > 1) {
 				condition += " AND t." + key + " = :" + key;
+			} else {
+				condition += " t." + key + " = :" + key;
+			}
+		}
+
+		try {
+			Query q = em.createQuery("SELECT t FROM  " + entityClass.getName() + "  t where " + condition, entityClass);
+
+			for (Map.Entry<String, Object> entry : searchItems.entrySet()) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				condition += " t." + key + " = :" + key;
+				q.setParameter(key, value);
+			}
+
+			return (T) q.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	
+	@Override
+	public T findByFieldOR(Map<String, Object> searchItems) {
+		String condition = "";
+
+		for (Map.Entry<String, Object> entry : searchItems.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+			if (condition.length() > 1) {
+				condition += " OR t." + key + " = :" + key;
 			} else {
 				condition += " t." + key + " = :" + key;
 			}

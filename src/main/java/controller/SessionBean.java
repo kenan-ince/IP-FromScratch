@@ -27,7 +27,7 @@ public class SessionBean extends AbstractBean<SystemUser> {
 		criteria.put("email", this.getEntity().getEmail());
 		criteria.put("password", this.getEntity().getPassword());
 		
-		SystemUser user = repo.findByFields(criteria);
+		SystemUser user = repo.findByFieldAND(criteria);
 		if (user != null) {
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("authenticated", user);
 			return "/back/landing?faces-redirect=true";
